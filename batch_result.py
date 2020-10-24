@@ -1,5 +1,8 @@
+#import regex and pandas
 import re
 import pandas as pd
+
+#define the function for the extraction
 def extraction(file):
     f = open(file, 'r')
     report = f.read()
@@ -12,7 +15,6 @@ def extraction(file):
         IpPort.append(portIP)
     print(IpPort)
 
-    print(len(IPreport))
     print(IPreport)
     Ncatreport = re.findall(r'(?<=Ncat: )(.*?[.](?=\n)|(?:\s*[\d.,])+)', report)
     FinalNcatreport=[]
@@ -21,14 +23,13 @@ def extraction(file):
         FinalNcatreport.append(resultNcat)
     print(FinalNcatreport)
 
-    # Ncatreport = re.findall(r'(?<=Ncat: )(.*?host|.*?out|(?:\s*[\d.,])+)', report)
-
+    #converting to dataframe and storing in excel
     df1 = pd.DataFrame(IpPort)
     df2 = pd.DataFrame(FinalNcatreport)
     df1.rename(columns={0:"IP address", 1:"Port"},inplace=True)
     df1['Result']= df2
     print(df1)
-    df1.to_excel(r'C:\Users\MIRACLE\Documents\2020.08.19 - 172.17.251.114 Tests\result.xlsx', index=False )
+    df1.to_excel(r'C:\Users\Documents\Tests\result.xlsx', index=False )
 
-
-extraction('Batch 6.txt')
+#testing the function
+extraction('BashResult.txt')
